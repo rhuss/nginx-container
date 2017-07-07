@@ -6,9 +6,10 @@
     state: present
   when: ansible_os_family == rh_fam
 
-- name: Update apt cache
+- name: Update apt cache and install ca-certificates
   apt:
     update_cache: yes
+    name: ca-certificates
   when: ansible_os_family == deb_fam
 
 - name: Install nginx
