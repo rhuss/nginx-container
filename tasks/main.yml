@@ -4,14 +4,15 @@
   yum:
     name: epel-release
     state: present
+  when: ansible_os_family == rh_fam
 
 - name: Install nginx
-  yum:
+  package:
     name: "{{ item }}" 
     state: latest
   with_items:
     - nginx
-    - rsync 
+    - rsync
 
 - name: Install dumb init
   get_url:
@@ -142,4 +143,9 @@
 
 - name: Clean yum cache
   command: yum clean all
+  when: ansible_os_family == rh_fam
+
+- name: Clean apt cache
+  command: apt-get autoclean
+  when: ansible_os_family == deb_fam
 
