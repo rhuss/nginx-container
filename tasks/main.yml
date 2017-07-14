@@ -152,5 +152,5 @@
   when: ansible_os_family == rh_fam
 
 - name: Clean apt cache
-  command: apt-get autoclean
+  command: apt-get clean
   when: ansible_os_family == deb_fam
