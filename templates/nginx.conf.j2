@@ -34,8 +34,16 @@ http {
         # Load configuration files for the default server block.
         include /etc/nginx/default.d/*.conf;
 
-        location /static/ {
-            root /;
+        # static content (with optional client-side caching)
+        location {{ STATIC_LOCATION }} {
+{% if CACHE_STATICS %}
+            access_log  off;
+            log_not_found off;
+            add_header  Pragma "public";
+            add_header  Cache-Control "public";
+            expires     30d;
+{% endif %}
+            alias {{ STATIC_ROOT }};
         }
 
 {% if PROXY %}       

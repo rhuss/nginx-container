@@ -33,6 +33,9 @@ $ ansible-container install ansible.nginx-container
 STATIC_ROOT: /static
 > Path to static content to be served by nginx.
 
+STATIC_LOCATION: {{ STATIC_ROOT }}/
+> Requests which match this pattern will be aliased to the {{ STATIC_ROOT }} directory. Usually "/static/" or "/assets/".
+
 PIDFILE_DIR: /run/nginx
 > Path where nginx will store the current PID value. 
 
