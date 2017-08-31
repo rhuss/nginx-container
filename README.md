@@ -52,7 +52,16 @@ PROXY_PASS: ""
 > The address of the backend server accepting the proxied requests. For example: `http://django:8080` 
 
 PROXY_LOCATION: ""
-> A string containing an optional modifier and a matching pattern. Requests that contain the matching pattern are forwarded to the PROXY_PASS address. For example,`~* /(api|static)` will forward requests that start with `/api` ro `/static`.  
+> A string containing an optional modifier and a matching pattern. Requests that contain the matching pattern are forwarded to the PROXY_PASS address. For example,`~* /(api|static)` will forward requests that start with `/api` or `/static`.  
+
+PROXY\_CONNECT\_TIMEOUT: 60
+> Set the `proxy_connect_timeout` with this value in seconds. [Per NGINX docs, cannot exceed 75s.](http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_connect_timeout)
+
+PROXY\_SEND\_TIMEOUT: 60
+> Set `proxy_send_timeout` with this value in seconds.
+
+PROXY\_READ\_TIMEOUT: 60
+> Set the `proxy_read_timeout` with this value in seconds.
 
 ## Dependencies
 
