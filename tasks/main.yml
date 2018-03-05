@@ -43,6 +43,16 @@
     group: root
     mode: 0664
 
+- name: Put extra nginx site config if specified
+  template:
+    src: "{{ item }}.j2"
+    dest: /etc/nginx/conf.d/{{ item }}
+    owner: root
+    group: root
+    mode: 0664
+  with_items: "{{ EXTRA_CONFIG }}"
+  when: EXTRA_CONFIG is defined and EXTRA_CONFIG|length > 0 
+
 - name: Create directories, if they don't exist
   file:
     path: "{{ item }}"

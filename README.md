@@ -63,6 +63,12 @@ PROXY\_SEND\_TIMEOUT: 60
 PROXY\_READ\_TIMEOUT: 60
 > Set the `proxy_read_timeout` with this value in seconds.
 
+### Optional
+
+EXTRA\_CONFIG
+> List of absolute paths to extra NGINX configuration templates to be placed in `/etc/nginx/conf.d` 
+> Filenames must end in `.conf.j2`, but specify this list with just `.conf`!
+
 ## Dependencies
 
 None.
