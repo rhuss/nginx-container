@@ -20,11 +20,12 @@ http {
     include             /etc/nginx/mime.types;
     default_type        application/octet-stream;
 
+{% if EXTRA_CONFIG is defined and EXTRA_CONFIG|length > 0 %}
     # Load modular configuration files from the /etc/nginx/conf.d directory.
     # See http://nginx.org/en/docs/ngx_core_module.html#include
     # for more information.
     include /etc/nginx/conf.d/*.conf;
-
+{% else %}
     server {
         listen       8000 default_server;
         listen       [::]:8000 default_server;
@@ -36,17 +37,17 @@ http {
 
         # static content (with optional client-side caching)
         location {{ STATIC_LOCATION }} {
-{% if CACHE_STATICS %}
+    {% if CACHE_STATICS %}
             access_log  off;
             log_not_found off;
             add_header  Pragma "public";
             add_header  Cache-Control "public";
             expires     30d;
-{% endif %}
+    {% endif %}
             alias {{ STATIC_LOCATION }};
         }
 
-{% if PROXY %}       
+    {% if PROXY %}       
         location {{ PROXY_LOCATION }} {
             proxy_pass_header Server;
             proxy_set_header Host $http_host;
@@ -58,9 +59,10 @@ http {
             proxy_read_timeout         {{ PROXY_READ_TIMEOUT | default(60) }}s;
             proxy_pass {{ PROXY_PASS }};
         }
-{% endif %}
+    {% endif %}
 
         error_page 404             /40x.html;
         error_page 500 502 503 504 /50x.html;
     }
+{% endif %}
 }
